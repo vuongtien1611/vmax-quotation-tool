@@ -40,3 +40,4 @@ if ($LASTEXITCODE -eq 0) {
 } else {
     Write-Host "`n[!] Có lỗi khi đẩy code lên GitHub. Vui lòng kiểm tra quyền truy cập repository của bạn." -ForegroundColor Red
 }
+

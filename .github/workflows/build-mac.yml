@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-latest
 
     env:
-      CSC_IDENTITY_AUTO_DISCOVERY: false
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
 
     steps:
       - name: Checkout repository
@@ -24,23 +24,29 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci || npm install
+        run: npm install
 
-      - name: Build DMG for Apple Silicon (M1/M2/M3/M4 - arm64)
-        run: npm run build:dmg:arm64
+      - name: Build macOS Application (Apple Silicon arm64)
+        run: |
+          echo "Starting build for arm64..."
+          npx electron-builder --mac dmg zip --arm64 -c.mac.identity=null
 
-      - name: Build DMG for Intel (x64)
-        run: npm run build:dmg:x64
+      - name: Build macOS Application (Intel x64)
+        run: |
+          echo "Starting build for x64..."
+          npx electron-builder --mac dmg zip --x64 -c.mac.identity=null
 
       - name: List generated build artifacts
         run: |
-          echo "=== Generated DMG Files ==="
-          ls -lh dist/*.dmg
+          echo "=== Generated Artifacts in dist/ ==="
+          ls -lh dist/
 
-      - name: Upload DMG Artifacts
+      - name: Upload DMG & ZIP Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: VMAX-Quotation-Mac-DMGs
-          path: dist/*.dmg
+          name: VMAX-Quotation-Mac-Apps
+          path: |
+            dist/*.dmg
+            dist/*.zip
           retention-days: 30
           if-no-files-found: error

@@ -6,10 +6,10 @@
   "scripts": {
     "start": "electron .",
     "build:win": "node create-icon.js && electron-builder --win nsis portable --x64",
-    "build:mac": "node create-icon.js && electron-builder --mac dmg zip",
-    "build:dmg": "node create-icon.js && electron-builder --mac dmg",
-    "build:dmg:arm64": "node create-icon.js && electron-builder --mac dmg --arm64",
-    "build:dmg:x64": "node create-icon.js && electron-builder --mac dmg --x64",
+    "build:mac": "electron-builder --mac dmg zip",
+    "build:dmg": "electron-builder --mac dmg zip",
+    "build:dmg:arm64": "electron-builder --mac dmg zip --arm64",
+    "build:dmg:x64": "electron-builder --mac dmg zip --x64",
     "pack:mac-zip": "powershell Compress-Archive -Path index.html, style.css, script.js, assets, libs, Mo-Bang-Bao-Gia-Mac.command, Huong-Dan-Su-Dung-Mac.txt -DestinationPath dist/VMAX-Quotation-Tool-Mac.zip -Force"
   },
   "build": {
@@ -72,29 +72,21 @@
       "artifactName": "VMAX-Quotation-Builder-Portable.${ext}"
     },
     "mac": {
-      "icon": "assets/logo-vmax.png",
+      "icon": "assets/icon.icns",
       "category": "public.app-category.business",
       "identity": null,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
       "target": [
-        "dmg"
+        "dmg",
+        "zip"
       ],
       "artifactName": "VMAX-Quotation-Builder-Mac-${arch}.${ext}"
     },
     "dmg": {
       "title": "VMAX Quotation Builder",
       "artifactName": "VMAX-Quotation-Builder-Mac-${arch}.${ext}",
-      "contents": [
-        {
-          "x": 130,
-          "y": 220
-        },
-        {
-          "x": 410,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
+      "sign": false
     }
   },
   "devDependencies": {
