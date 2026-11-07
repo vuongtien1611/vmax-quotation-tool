@@ -5,6 +5,9 @@ on:
     branches: [ "**" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-mac:
     name: Build macOS DMGs (Apple Silicon & Intel)
@@ -76,3 +79,25 @@ jobs:
             dist/*.zip
           retention-days: 30
           if-no-files-found: error
+
+      - name: Publish Direct Download GitHub Release
+        if: success()
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.0
+          name: "VMAX Quotation Builder v1.0.0 for macOS"
+          body: |
+            ## VMAX Quotation Builder - Ứng dụng Desktop Báo Giá Chuyên Nghiệp
+
+            Tải trực tiếp file cài đặt dành cho MacBook (macOS):
+            - **[VMAX-Quotation-Builder-Mac-arm64.dmg](https://github.com/vuongtien1611/vmax-quotation-tool/releases/download/v1.0.0/VMAX-Quotation-Builder-Mac-arm64.dmg)**: Dành cho MacBook chip **Apple Silicon (M1, M2, M3, M4...)**.
+            - **[VMAX-Quotation-Builder-Mac-x64.dmg](https://github.com/vuongtien1611/vmax-quotation-tool/releases/download/v1.0.0/VMAX-Quotation-Builder-Mac-x64.dmg)**: Dành cho MacBook đời cũ chạy chip **Intel**.
+
+            *Ứng dụng chạy độc lập 100% offline, tích hợp đầy đủ tính năng tạo báo giá, xuất file PDF, lưu trữ và sao lưu dữ liệu.*
+          draft: false
+          prerelease: false
+          files: |
+            dist/*.dmg
+            dist/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
