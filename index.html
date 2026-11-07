@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:;">
+    <title>VMAX Quotation Builder</title>
+
+    <!-- Google Fonts: Be Vietnam Pro (Offline) -->
+    <link rel="stylesheet" href="libs/fonts/be-vietnam-pro.css">
+
+    <!-- Font Awesome Icons (Offline) -->
+    <link rel="stylesheet" href="libs/font-awesome/css/all.min.css">
+
+    <!-- SortableJS (Drag and Drop) (Offline) -->
+    <script src="libs/sortable/Sortable.min.js"></script>
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="vmax-quote-body">
+
+    <!-- Header ứng dụng -->
+    <header class="vmax-quote-header">
+        <div class="vmax-quote-header-left">
+            <img src="assets/logo-vmax.png" alt="VMAX Logo" class="vmax-quote-header-logo"
+                id="vmax-quote-header-logo-img">
+            <div class="vmax-quote-header-title-wrap">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <h1 class="vmax-quote-header-title">CÔNG CỤ TẠO BẢNG BÁO GIÁ</h1>
+                    <span id="vmax-quote-save-status" class="vmax-quote-save-badge saved"><i
+                            class="fas fa-check-circle"></i> Đã lưu</span>
+                </div>
+                <p class="vmax-quote-header-subtitle">Tạo, chỉnh sửa và xuất PDF nhanh chóng</p>
+            </div>
+        </div>
+        <div class="vmax-quote-header-right">
+            <button class="vmax-quote-btn-secondary" id="vmax-quote-btn-undo" title="Hoàn tác (Ctrl+Z)" disabled>
+                <i class="fas fa-undo"></i> <span>Hoàn tác</span>
+            </button>
+            <button class="vmax-quote-btn-secondary" id="vmax-quote-btn-redo" title="Khôi phục (Ctrl+Y)" disabled>
+                <i class="fas fa-redo"></i> <span>Khôi phục</span>
+            </button>
+            <button class="vmax-quote-btn-secondary" id="vmax-quote-btn-save">
+                <i class="fas fa-save"></i> <span>Lưu nháp</span>
+            </button>
+            <button class="vmax-quote-btn-danger" id="vmax-quote-btn-reset">
+                <i class="fas fa-trash-alt"></i> <span>Đặt lại</span>
+            </button>
+            <button class="vmax-quote-btn-primary" id="vmax-quote-btn-export-pdf">
+                <i class="fas fa-file-pdf"></i> <span>Xuất PDF tự động</span>
+            </button>
+            <button class="vmax-quote-btn-secondary" id="vmax-quote-btn-export-word"
+                style="background-color: #2b579a; color: white; border: none; margin-left: 8px;"
+                title="Xuất file Word (.doc) có thể chỉnh sửa trực tiếp">
+                <i class="fas fa-file-word"></i> <span>Xuất file Word (Sửa được)</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- App Container chính -->
+    <main class="vmax-quote-app">
+
+        <!-- CỘT TRÁI: Bảng điều khiển nhập liệu -->
+        <section class="vmax-quote-editor">
+
+            <div class="vmax-quote-editor-actions" style="margin-bottom: 10px;">
+                <button class="vmax-quote-btn-small" id="vmax-quote-btn-expand-all">
+                    <i class="fas fa-chevron-down"></i> Mở rộng tất cả
+                </button>
+                <button class="vmax-quote-btn-small" id="vmax-quote-btn-collapse-all">
+                    <i class="fas fa-chevron-up"></i> Thu gọn tất cả
+                </button>
+            </div>
+
+
+            <div class="vmax-quote-template-manager-panel"
+                style="margin: 0 15px 15px 15px; padding: 12px; background-color: #f7fafc; border: 1px solid #e2e8f0; border-radius: 6px;">
+                <div
+                    style="font-weight: bold; font-size: 13px; color: #2d3748; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                    <span><i class="fas fa-file-invoice"></i> MẪU BÁO GIÁ NHANH</span>
+                </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                    <select id="vmax-quote-template-select" class="vmax-quote-input"
+                        style="flex: 1; height: 32px; padding: 0 8px; font-size: 12px; border-radius: 4px; border: 1px solid #cbd5e0;">
+                        <option value="preset-web">Mẫu: Thiết kế Website chuyên nghiệp (Mặc định)</option>
+                        <option value="preset-seo">Mẫu: Dịch vụ SEO tổng thể</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button type="button" class="vmax-quote-btn-small" id="vmax-quote-btn-load-template-content"
+                        style="background-color: #2b6cb0; color: white; border: none; height: 28px; font-size: 11px; padding: 0 10px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 4px;"
+                        title="Nạp hạng mục & chi phí từ mẫu này vào báo giá hiện tại">
+                        <i class="fas fa-file-import"></i> Nạp nội dung mẫu
+                    </button>
+                    <button type="button" class="vmax-quote-btn-small" id="vmax-quote-btn-save-template"
+                        style="background-color: var(--vmax-primary); color: white; border: none; height: 28px; font-size: 11px; padding: 0 10px; border-radius: 4px; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px;"
+                        title="Lưu báo giá hiện tại thành mẫu mới">
+                        <i class="fas fa-plus"></i> Lưu mẫu mới
+                    </button>
+                    <button type="button" class="vmax-quote-btn-small" id="vmax-quote-btn-delete-template"
+                        style="background-color: var(--vmax-danger); color: white; border: none; height: 28px; font-size: 11px; padding: 0 10px; border-radius: 4px; cursor: pointer; display: none; align-items: center; justify-content: center; gap: 4px;"
+                        title="Xóa mẫu báo giá này">
+                        <i class="fas fa-trash"></i> Xóa mẫu
+                    </button>
+                </div>
+            </div>
+            <div class="vmax-quote-accordion-item" id="vmax-quote-acc-company">
+                <button class="vmax-quote-accordion-header" aria-expanded="true">
+                    <span><i class="fas fa-building"></i> 1. Thông tin công ty</span>
+                    <i class="fas fa-chevron-down vmax-quote-accordion-arrow"></i>
+                </button>
+                <div class="vmax-quote-accordion-content">
+                    <div class="vmax-quote-form-group">
+                        <label for="comp-name">Tên công ty <span class="vmax-quote-required">*</span></label>
+                        <input type="text" id="comp-name" class="vmax-quote-input" required>
+                        <div class="vmax-quote-error-msg" id="err-comp-name">Vui lòng nhập tên công ty</div>
+                    </div>
+                    <div class="vmax-quote-form-group">
+                        <label for="comp-address">Địa chỉ</label>
+                        <input type="text" id="comp-address" class="vmax-quote-input">
+                    </div>
+                    <div class="vmax-quote-form-row">
+                        <div class="vmax-quote-form-group">
+                            <label for="comp-tax-id">Mã số thuế</label>
+                            <input type="text" id="comp-tax-id" class="vmax-quote-input">
+                        </div>
+                        <div class="vmax-quote-form-group">
+                            <label for="comp-hotline">Hotline</label>
+                            <input type="text" id="comp-hotline" class="vmax-quote-input">
+                        </div>
+                    </div>
+                    <div class="vmax-quote-form-row">
+                        <div class="vmax-quote-form-group">
+                            <label for="comp-email">Email</label>
+                            <input type="email" id="comp-email" class="vmax-quote-input">
+                        </div>
+                        <div class="vmax-quote-form-group">
+                            <label for="comp-website">Website</label>
+                            <input type="text" id="comp-website" class="vmax-quote-input">
+                        </div>
+                    </div>
+                    <div class="vmax-quote-form-group">
+                        <label>Tải lên Logo</label>
+                        <div class="vmax-quote-file-upload">
+                            <label for="comp-logo" class="vmax-quote-file-label">
+                                <i class="fas fa-cloud-upload-alt"></i> Chọn ảnh logo (PNG, JPG, WebP)
+                            </label>
+                            <input type="file" id="comp-logo" accept="image/*" class="vmax-quote-file-input">
+                            <span class="vmax-quote-file-name" id="comp-logo-name">Chưa có tệp nào được chọn</span>
+                        </div>
+                        <p class="vmax-quote-hint">Khuyên dùng logo nền trong suốt.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nhóm 2: Thông tin báo giá -->
+            <div class="vmax-quote-accordion-item" id="vmax-quote-acc-quotation">
+                <button class="vmax-quote-accordion-header" aria-expanded="true">
+                    <span><i class="fas fa-file-invoice"></i> 2. Thông tin báo giá</span>
+                    <i class="fas fa-chevron-down vmax-quote-accordion-arrow"></i>
+                </button>
+                <div class="vmax-quote-accordion-content">
+                    <div class="vmax-quote-form-group">
+                        <label for="quote-title">Tiêu đề báo giá <span class="vmax-quote-required">*</span></label>
+                        <input type="text" id="quote-title" class="vmax-quote-input" required>
+                        <div class="vmax-quote-error-msg" id="err-quote-title">Vui lòng nhập tiêu đề báo giá</div>
+                    </div>
+                    <div class="vmax-quote-form-group">
+                        <label for="quote-desc">Mô tả ngắn</label>
+                        <textarea id="quote-desc" class="vmax-quote-textarea" rows="2"></textarea>
+                    </div>
+                    <div class="vmax-quote-form-row">
+                        <div class="vmax-quote-form-group">
+                            <label for="quote-code">Mã báo giá</label>
+                            <input type="text" id="quote-code" class="vmax-quote-input">
+                        </div>
+                        <div class="vmax-quote-form-group">
+                            <label for="quote-staff">Nhân viên phụ trách</label>
+                            <input type="text" id="quote-staff" class="vmax-quote-input">
+                        </div>
+                    </div>
+                    <div class="vmax-quote-form-row">
+                        <div class="vmax-quote-form-group">
+                            <label for="quote-date">Ngày lập</label>
+                            <input type="date" id="quote-date" class="vmax-quote-input">
+                        </div>
+                        <div class="vmax-quote-form-group">
+                            <label for="quote-due-date">Thời hạn hiệu lực</label>
+                            <input type="date" id="quote-due-date" class="vmax-quote-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nhóm 3: Thông tin khách hàng -->
+            <div class="vmax-quote-accordion-item" id="vmax-quote-acc-customer">
+                <button class="vmax-quote-accordion-header" aria-expanded="true">
+                    <span><i class="fas fa-user-tie"></i> 3. Thông tin khách hàng</span>
+                    <i class="fas fa-chevron-down vmax-quote-accordion-arrow"></i>
+                </button>
+                <div class="vmax-quote-accordion-content">
+                    <div class="vmax-quote-form-group">
+                        <label for="cust-project">Tên dự án <span class="vmax-quote-required">*</span></label>
+                        <input type="text" id="cust-project" class="vmax-quote-input" required>
+                        <div class="vmax-quote-error-msg" id="err-cust-project">Vui lòng nhập tên dự án</div>
+                    </div>
+
+                    <p class="vmax-quote-info-text" style="margin-top: 15px; margin-bottom: 8px;">
+                        Kéo thả biểu tượng <i class="fas fa-grip-lines"></i> để sắp xếp thứ tự thông tin khách hàng.
+                    </p>
+
+                    <!-- Danh sách các dòng thông tin khách hàng động -->
+                    <div class="vmax-quote-customer-rows-container" id="vmax-quote-customer-rows-list">
+                        <!-- Render động qua JS -->
+                    </div>
+
+                    <button type="button" class="vmax-quote-btn-add-item" id="vmax-quote-btn-add-customer-row"
+                        style="margin-top: 12px; width: 100%;">
+                        <i class="fas fa-plus"></i> Thêm trường thông tin
+                    </button>
+
+                    <!-- Giữ lại các input cũ trong khối ẩn để tương thích ngược -->
+                    <div style="display: none;">
+                        <input type="text" id="cust-name">
+                        <input type="text" id="cust-contact">
+                        <input type="text" id="cust-phone">
+                        <input type="email" id="cust-email">
+                        <input type="text" id="cust-address">
+                        <input type="text" id="cust-service">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nhóm 4: Hạng mục công việc -->
+            <div class="vmax-quote-accordion-item" id="vmax-quote-acc-items">
+                <button class="vmax-quote-accordion-header" aria-expanded="true">
+                    <span><i class="fas fa-list-ol"></i> 4. Hạng mục công việc</span>
+                    <i class="fas fa-chevron-down vmax-quote-accordion-arrow"></i>
+                </button>
+                <div class="vmax-quote-accordion-content">
+                    <p class="vmax-quote-info-text">
+                        Kéo thả biểu tượng <i class="fas fa-grip-lines"></i> để thay đổi thứ tự hạng mục.
+                    </p>
+
+                    <!-- Danh sách các hạng mục (Sẽ được kéo thả và render bằng JS) -->
+                    <div class="vmax-quote-items-container" id="vmax-quote-items-list">
+                        <!-- Sẽ được thêm bằng JS -->
+                    </div>
+
+                    <button type="button" class="vmax-quote-btn-add-item" id="vmax-quote-btn-add-item-trigger">
+                        <i class="fas fa-plus"></i> Thêm hạng mục mới
+                    </button>
+                </div>
+            </div>
+
+            <!-- Nhóm 5: Giá trị báo giá -->
+            <div class="vmax-quote-accordion-item" id="vmax-quote-acc-pricing">
+                <button class="vmax-quote-accordion-header" aria-expanded="true">
+                    <span><i class="fas fa-calculator"></i> 5. Giá trị báo giá</span>
+                    <i class="fas fa-chevron-down vmax-quote-accordion-arrow"></i>
+                </button>
+                <div class="vmax-quote-accordion-content">
+                    <div class="vmax-quote-form-row">
+                        <div class="vmax-quote-form-group">
+                            <label for="price-service">Giá dịch vụ (VNĐ) <span
+                                    class="vmax-quote-required">*</span></label>
+                            <input type="number" id="price-service" class="vmax-quote-input" min="0" required value="0">
+                            <div class="vmax-quote-error-msg" id="err-price-service">Vui lòng nhập giá dịch vụ</div>
+                        </div>
+                        <div class="vmax-quote-form-group">
+                            <label for="price-currency">Đơn vị tiền tệ</label>
+                            <select id="price-currency" class="vmax-quote-select">
+                                <option value="VNĐ" selected>VNĐ</option>
+                                <option value="USD">USD</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Tùy chọn VAT -->
+                    <div class="vmax-quote-toggle-row">
+                        <label class="vmax-quote-toggle-label">
+                            <input type="checkbox" id="price-vat-enabled" class="vmax-quote-checkbox" checked>
+                            Bật thuế VAT
+                        </label>
+                        <div class="vmax-quote-toggle-input-wrap" id="vat-percent-container">
+                            <input type="number" id="price-vat-percent" class="vmax-quote-input-small" min="0" max="100"
+                                value="8">
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <!-- Tùy chọn Chiết khấu -->
+                    <div class="vmax-quote-toggle-row">
+                        <label class="vmax-quote-toggle-label">
+                            <input type="checkbox" id="price-discount-enabled" class="vmax-quote-checkbox">
+                            Áp dụng chiết khấu
+                        </label>
+                        <div class="vmax-quote-toggle-input-wrap" id="discount-percent-container" style="display:none;">
+                            <input type="number" id="price-discount-percent" class="vmax-quote-input-small" min="0"
+                                max="100" value="0">
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <!-- Tùy chọn Chi phí phát sinh -->
+                    <div class="vmax-quote-toggle-row">
+                        <label class="vmax-quote-toggle-label">
+                            <input type="checkbox" id="price-extra-enabled" class="vmax-quote-checkbox">
+                            Chi phí phát sinh khác
+                        </label>
+                        <div class="vmax-quote-toggle-input-wrap" id="extra-fee-container" style="display:none;">
+                            <input type="number" id="price-extra-fee" class="vmax-quote-input" min="0" value="0"
+                                placeholder="Số tiền phát sinh">
+                        </div>
+                    </div>
+
+                    <!-- Số tiền viết bằng chữ -->
+                    <div class="vmax-quote-form-group">
+                        <label for="price-word-value">Số tiền bằng chữ</label>
+                        <input type="text" id="price-word-value" class="vmax-quote-input"
+                            placeholder="Tự động tính hoặc nhập tay">
+                    </div>
+
+                    <!-- Live Summary Panel trong form -->
+                    <div class="vmax-quote-live-calc-panel">
+                        <div class="vmax-quote-live-calc-row">
+                            <span>Giá dịch vụ:</span>
+                            <strong id="live-calc-service">0 VNĐ</strong>
+                        </div>
+                        <div class="vmax-quote-live-calc-row" id="live-calc-vat-row">
+                            <span>VAT (<span id="live-vat-rate">8</span>%):</span>
+                            <strong id="live-calc-vat">0 VNĐ</strong>
+                        </div>
+                        <div class="vmax-quote-live-calc-row" id="live-calc-discount-row" style="display: none;">
+                            <span>Chiết khấu (<span id="live-discount-rate">0</span>%):</span>
+                            <strong id="live-calc-discount">0 VNĐ</strong>
+                        </div>
+                        <div class="vmax-quote-live-calc-row" id="live-calc-extra-row" style="display: none;">
+                            <span>Chi phí phát sinh:</span>
+                            <strong id="live-calc-extra">0 VNĐ</strong>
+                        </div>
+                        <hr class="vmax-quote-live-calc-divider">
+                        <div class="vmax-quote-live-calc-row vmax-quote-live-calc-total">
+                            <span>TỔNG GIÁ TRỊ:</span>
+                            <strong id="live-calc-total">0 VNĐ</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nhóm 6: Giao hàng & Ghi chú -->
+            <div class="vmax-quote-accordion-item" id="vmax-quote-acc-timeline">
+                <button class="vmax-quote-accordion-header" aria-expanded="false">
+                    <span><i class="fas fa-calendar-alt"></i> 6. Tiến độ & Điều khoản</span>
+                    <i class="fas fa-chevron-down vmax-quote-accordion-arrow"></i>
+                </button>
+                <div class="vmax-quote-accordion-content" style="display: none;">
+                    <div class="vmax-quote-form-group">
+                        <label for="time-duration">Thời gian thực hiện <span
+                                class="vmax-quote-required">*</span></label>
+                        <input type="text" id="time-duration" class="vmax-quote-input" required>
+                    </div>
+                    <div class="vmax-quote-form-row">
+                        <div class="vmax-quote-form-group">
+                            <label for="time-start">Ngày bắt đầu</label>
+                            <input type="date" id="time-start" class="vmax-quote-input">
+                        </div>
+                        <div class="vmax-quote-form-group">
+                            <label for="time-end">Ngày hoàn thành</label>
+                            <input type="date" id="time-end" class="vmax-quote-input">
+                        </div>
+                    </div>
+                    <div class="vmax-quote-form-group">
+                        <label for="time-warranty">Chế độ bảo hành</label>
+                        <input type="text" id="time-warranty" class="vmax-quote-input">
+                    </div>
+                    <div class="vmax-quote-form-group">
+                        <label for="time-payment">Điều khoản thanh toán</label>
+                        <textarea id="time-payment" class="vmax-quote-textarea" rows="2"></textarea>
+                    </div>
+                    <div class="vmax-quote-form-group">
+                        <label for="time-notes">Ghi chú thêm</label>
+                        <textarea id="time-notes" class="vmax-quote-textarea" rows="2"></textarea>
+                    </div>
+                    <div class="vmax-quote-toggle-row">
+                        <label class="vmax-quote-toggle-label">
+                            <input type="checkbox" id="time-signature-enabled" class="vmax-quote-checkbox" checked>
+                            Hiển thị phần chữ ký xác nhận
+                        </label>
+                    </div>
+                    <div class="vmax-quote-form-group" id="signature-img-upload-container" style="margin-top: 10px;">
+                        <label>Chữ ký đại diện Khách hàng</label>
+                        <div class="vmax-quote-file-upload" style="margin-bottom: 10px;">
+                            <label for="signature-cust-img" class="vmax-quote-file-label">
+                                <i class="fas fa-cloud-upload-alt"></i> Chọn ảnh chữ ký KH
+                            </label>
+                            <input type="file" id="signature-cust-img" accept="image/*" class="vmax-quote-file-input">
+                            <span class="vmax-quote-file-name" id="signature-cust-img-name">Chưa có tệp nào được
+                                chọn</span>
+                        </div>
+
+                        <label>Chữ ký & Con dấu đại diện VMAX</label>
+                        <div class="vmax-quote-file-upload">
+                            <label for="signature-comp-img" class="vmax-quote-file-label">
+                                <i class="fas fa-cloud-upload-alt"></i> Chọn ảnh chữ ký VMAX
+                            </label>
+                            <input type="file" id="signature-comp-img" accept="image/*" class="vmax-quote-file-input">
+                            <span class="vmax-quote-file-name" id="signature-comp-img-name">Chưa có tệp nào được
+                                chọn</span>
+                        </div>
+                        <p class="vmax-quote-hint" style="margin-top: 5px;">Khuyên dùng chữ ký nền trong suốt (PNG).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nhóm 7: Sao lưu & Khôi phục -->
+            <div class="vmax-quote-accordion-item" id="vmax-quote-acc-backup">
+                <button class="vmax-quote-accordion-header" aria-expanded="false">
+                    <span><i class="fas fa-database"></i> 7. Sao lưu & Khôi phục</span>
+                    <i class="fas fa-chevron-down vmax-quote-accordion-arrow"></i>
+                </button>
+                <div class="vmax-quote-accordion-content" style="display: none;">
+                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                        <button type="button" class="vmax-quote-btn-primary" id="vmax-quote-btn-backup-save"
+                            style="flex: 1; padding: 10px 5px; font-size: 11px;">
+                            <i class="fas fa-file-export"></i> Sao lưu cấu hình
+                        </button>
+                        <button type="button" class="vmax-quote-btn-secondary" id="vmax-quote-btn-backup-load"
+                            style="flex: 1; padding: 10px 5px; font-size: 11px;">
+                            <i class="fas fa-file-import"></i> Khôi phục cấu hình
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thanh hành động cố định ở chân sidebar -->
+            <div class="vmax-quote-editor-footer">
+                <button type="button" class="vmax-quote-btn-secondary" id="vmax-quote-sidebar-btn-save"
+                    title="Lưu nháp">
+                    <i class="fas fa-save"></i> <span>Lưu nháp</span>
+                </button>
+                <button type="button" class="vmax-quote-btn-secondary" id="vmax-quote-sidebar-btn-print"
+                    title="In / Lưu PDF">
+                    <i class="fas fa-print"></i> <span>In ấn</span>
+                </button>
+                <button type="button" class="vmax-quote-btn-primary" id="vmax-quote-sidebar-btn-export-pdf"
+                    title="Xuất PDF tự động">
+                    <i class="fas fa-file-pdf"></i> <span>Xuất PDF</span>
+                </button>
+                <button type="button" class="vmax-quote-btn-secondary" id="vmax-quote-sidebar-btn-export-word"
+                    style="background-color: #2b579a; color: white; border: none; margin-left: 0;"
+                    title="Xuất file Word chỉnh sửa được">
+                    <i class="fas fa-file-word"></i> <span>Xuất Word</span>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- CỘT PHẢI: Bản xem trước báo giá (A4) -->
+        <section class="vmax-quote-preview-panel">
+
+            <!-- Toolbar công cụ preview -->
+            <div class="vmax-quote-preview-toolbar">
+                <div class="vmax-quote-toolbar-right">
+                    <button class="vmax-quote-btn-icon" id="vmax-quote-zoom-out" title="Thu nhỏ">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <button class="vmax-quote-btn-text" id="vmax-quote-zoom-val">100%</button>
+                    <button class="vmax-quote-btn-icon" id="vmax-quote-zoom-in" title="Phóng to">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                    <button class="vmax-quote-btn-secondary" id="vmax-quote-btn-preview-fullscreen"
+                        title="Xem toàn màn hình">
+                        <i class="fas fa-expand"></i> <span>Toàn màn hình</span>
+                    </button>
+                    <button class="vmax-quote-btn-secondary" id="vmax-quote-btn-print" title="In trực tiếp">
+                        <i class="fas fa-print"></i> <span>In / Lưu PDF</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Khung bao ngoài để scroll/zoom trang A4 -->
+            <div class="vmax-quote-preview-wrap" id="vmax-quote-preview-wrapper-id">
+
+                <!-- TRANG A4 BÁO GIÁ THỰC TẾ -->
+                <div class="vmax-quote-page" id="vmax-quote-page-print">
+
+                    <!-- 1. Header trang báo giá: Logo & Thông tin công ty -->
+                    <div class="vmax-quote-page-header">
+                        <div class="vmax-quote-page-header-logo-container">
+                            <img src="assets/logo-vmax.png" alt="Logo VMAX" class="vmax-quote-page-logo"
+                                id="vmax-quote-page-logo-preview">
+
+                        </div>
+                        <div class="vmax-quote-page-header-divider"></div>
+                        <div class="vmax-quote-page-header-info">
+                            <h3 class="vmax-quote-page-comp-name" id="p-comp-name">CÔNG TY TNHH CÔNG NGHỆ SỐ VMAX</h3>
+                            <p class="vmax-quote-page-comp-text">
+                                <i class="fas fa-map-marker-alt"></i> <span id="p-comp-address">Số 95 Hàng Phúc, Phường
+                                    Yên Sở, Thành phố Hà Nội</span>
+                            </p>
+                            <p class="vmax-quote-page-comp-text">
+                                <i class="fas fa-file-invoice"></i> Mã số thuế: <span id="p-comp-tax">0111542408</span>
+                            </p>
+                            <p class="vmax-quote-page-comp-text">
+                                <i class="fas fa-phone-alt"></i> Hotline: <span id="p-comp-hotline">0825.99.33.55</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 2. Tiêu đề báo giá -->
+                    <div class="vmax-quote-page-title-section">
+                        <h2 class="vmax-quote-page-title" id="p-quote-title">BẢNG BÁO GIÁ DỊCH VỤ VMAX</h2>
+                        <div class="vmax-quote-page-subtitle-container">
+                            <span class="vmax-quote-subtitle-line"></span>
+                            <span class="vmax-quote-subtitle-diamond">♦</span>
+                            <p class="vmax-quote-page-subtitle" id="p-quote-desc">Chuyên thiết kế website, SEO và dịch
+                                vụ số toàn diện</p>
+                            <span class="vmax-quote-subtitle-diamond">♦</span>
+                            <span class="vmax-quote-subtitle-line"></span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Section: Thông tin khách hàng -->
+                    <div class="vmax-quote-page-section-header">
+                        <div class="vmax-quote-page-section-icon"><i class="fas fa-user"></i></div>
+                        <h4 class="vmax-quote-page-section-title-main">THÔNG TIN KHÁCH HÀNG</h4>
+                    </div>
+                    <div class="vmax-quote-page-customer-box">
+                        <table class="vmax-quote-page-customer-table">
+                            <tr>
+                                <td class="vmax-quote-cust-label">Tên khách hàng / doanh nghiệp:</td>
+                                <td class="vmax-quote-cust-val" id="p-cust-name">MVP ACADEMY</td>
+                            </tr>
+                            <tr>
+                                <td class="vmax-quote-cust-label">Số điện thoại:</td>
+                                <td class="vmax-quote-cust-val" id="p-cust-phone">
+                                    ................................................</td>
+                            </tr>
+                            <tr>
+                                <td class="vmax-quote-cust-label">Địa chỉ:</td>
+                                <td class="vmax-quote-cust-val" id="p-cust-address">
+                                    ................................................</td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <!-- 4. Section: Dự án -->
+                    <div class="vmax-quote-page-project-card">
+                        <div class="vmax-quote-page-project-header">
+                            <i class="fas fa-cog"></i> DỰ ÁN: <span id="p-cust-project">CHỈNH SỬA WEBSITE
+                                MVPACADEMY</span>
+                        </div>
+                        <div class="vmax-quote-page-project-subheader">các hạng mục cần hoàn thành</div>
+                        <div class="vmax-quote-page-project-body" id="vmax-quote-page-items-preview">
+                            <!-- Items render dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- 5. Section: Chi tiết giá trị dịch vụ -->
+                    <div class="vmax-quote-page-pricing-section">
+                        <div class="vmax-quote-page-pricing-left">
+                            <div class="vmax-quote-page-pricing-badge">
+                                <i class="fas fa-calculator"></i>
+                                <span>GIÁ TRỊ<br>BÁO GIÁ</span>
+                            </div>
+                        </div>
+                        <div class="vmax-quote-page-pricing-right">
+                            <table class="vmax-quote-page-pricing-table-new">
+                                <tr>
+                                    <td class="vmax-quote-price-label">Báo giá dịch vụ:</td>
+                                    <td class="vmax-quote-price-val" id="p-price-service">3.000.000 VNĐ</td>
+                                </tr>
+                                <tr id="p-price-vat-row">
+                                    <td class="vmax-quote-price-label">Thuế VAT (<span id="p-vat-rate">8</span>%):</td>
+                                    <td class="vmax-quote-price-val" id="p-price-vat">240.000 VNĐ</td>
+                                </tr>
+                                <tr id="p-price-discount-row" style="display: none;">
+                                    <td class="vmax-quote-price-label">Chiết khấu (<span
+                                            id="p-discount-rate">0</span>%):</td>
+                                    <td class="vmax-quote-price-val" id="p-price-discount">0 VNĐ</td>
+                                </tr>
+                                <tr id="p-price-extra-row" style="display: none;">
+                                    <td class="vmax-quote-price-label">Chi phí phát sinh khác:</td>
+                                    <td class="vmax-quote-price-val" id="p-price-extra">0 VNĐ</td>
+                                </tr>
+                                <tr class="vmax-quote-price-total-row">
+                                    <td class="vmax-quote-price-total-label">TỔNG GIÁ TRỊ:</td>
+                                    <td class="vmax-quote-price-total-val" id="p-price-total">3.240.000 VNĐ</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 6. Section: Chân trang (Số tiền bằng chữ & Thời gian) -->
+                    <div class="vmax-quote-page-bottom-section">
+                        <div class="vmax-quote-page-bottom-box">
+                            <div class="vmax-quote-page-bottom-icon-wrap">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="vmax-quote-page-bottom-text-wrap">
+                                <span class="vmax-quote-page-bottom-label">Số tiền bằng chữ:</span>
+                                <span class="vmax-quote-page-bottom-val-words" id="p-price-words">Ba triệu hai trăm bốn
+                                    mươi nghìn đồng.</span>
+                            </div>
+                        </div>
+                        <div class="vmax-quote-page-bottom-box">
+                            <div class="vmax-quote-page-bottom-icon-wrap">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="vmax-quote-page-bottom-text-wrap">
+                                <span class="vmax-quote-page-bottom-label-timeline">THỜI GIAN THỰC HIỆN:</span>
+                                <span class="vmax-quote-page-bottom-val-timeline" id="p-time-duration">1-3 NGÀY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. Section: Chữ ký xác nhận (Signatures) -->
+                    <div id="vmax-quote-signatures-panel" class="vmax-quote-page-signature-section">
+                        <div class="vmax-quote-signature-col">
+                            <p class="vmax-quote-signature-title">ĐẠI DIỆN KHÁCH HÀNG</p>
+                            <p class="vmax-quote-signature-sub">(Ký và ghi rõ họ tên)</p>
+                            <div class="vmax-quote-signature-space">
+                                <img src="" alt="Chữ ký Khách hàng" class="vmax-quote-signature-img"
+                                    id="vmax-quote-signature-cust-preview-img" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="vmax-quote-signature-col">
+                            <p class="vmax-quote-signature-title">ĐẠI DIỆN VMAX</p>
+                            <p class="vmax-quote-signature-sub">(Ký, đóng dấu và ghi rõ họ tên)</p>
+                            <div class="vmax-quote-signature-space">
+                                <img src="" alt="Chữ ký VMAX" class="vmax-quote-signature-img"
+                                    id="vmax-quote-signature-comp-preview-img" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hoa văn trang trí sóng chân trang -->
+                    <div class="vmax-quote-page-footer-wave">
+                        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            preserveAspectRatio="none">
+                            <path
+                                d="M0,64L80,58.7C160,53,320,43,480,53.3C640,64,800,96,960,96C1120,96,1280,64,1360,48L1440,32L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
+                                fill="#EAF7ED" />
+                            <path
+                                d="M0,96L80,85.3C160,75,320,53,480,58.7C640,64,800,96,960,101.3C1120,107,1280,85,1360,74.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
+                                fill="#B9D8C1" fill-opacity="0.5" />
+                            <path
+                                d="M0,48L120,58.7C240,69,480,91,720,91C960,91,1200,69,1320,58.7L1440,48L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z"
+                                fill="#21B33F" fill-opacity="0.1" />
+                        </svg>
+                    </div>
+
+                    <!-- Hidden elements to prevent JS errors -->
+                    <div style="display: none;">
+                        <span id="p-comp-email"></span>
+                        <span id="p-comp-website"></span>
+                        <span id="p-comp-tax-wrap"></span>
+                        <span id="p-quote-code"></span>
+                        <span id="p-quote-date"></span>
+                        <span id="p-quote-due-date"></span>
+                        <span id="p-quote-staff"></span>
+                        <span id="p-cust-contact"></span>
+                        <span id="p-cust-email"></span>
+                        <span id="p-cust-service"></span>
+                        <div id="p-time-dates-wrap">
+                            <span id="p-time-start"></span>
+                            <span id="p-time-end"></span>
+                        </div>
+                        <div id="p-warranty-box-wrap">
+                            <span id="p-time-warranty"></span>
+                        </div>
+                        <div id="p-payment-box-wrap">
+                            <span id="p-time-payment"></span>
+                        </div>
+                        <div id="p-notes-box-wrap">
+                            <span id="p-time-notes"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Nút nổi trên tablet/mobile hoặc floating button xem trước báo giá trên mobile -->
+            <button class="vmax-quote-btn-fullscreen-floating" id="vmax-quote-floating-preview-btn">
+                <i class="fas fa-eye"></i> Xem trước báo giá
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Toolbar cố định bên dưới (dành cho Tablet & Mobile) -->
+    <div class="vmax-quote-mobile-toolbar">
+        <button class="vmax-quote-btn-secondary" id="vmax-quote-btn-mob-save">
+            <i class="fas fa-save"></i> <span>Nháp</span>
+        </button>
+        <button class="vmax-quote-btn-secondary" id="vmax-quote-btn-mob-print">
+            <i class="fas fa-print"></i> <span>In/Lưu</span>
+        </button>
+        <button class="vmax-quote-btn-primary" id="vmax-quote-btn-mob-export">
+            <i class="fas fa-file-pdf"></i> <span>Xuất PDF</span>
+        </button>
+    </div>
+
+    <!-- Hộp thoại xác nhận tùy chỉnh (Custom Confirmation Modal) -->
+    <div class="vmax-quote-modal-overlay" id="vmax-quote-confirm-modal">
+        <div class="vmax-quote-modal">
+            <div class="vmax-quote-modal-header">
+                <h4 class="vmax-quote-modal-title" id="vmax-quote-modal-title-text">Xác nhận hành động</h4>
+                <button class="vmax-quote-modal-close" id="vmax-quote-modal-close-btn">&times;</button>
+            </div>
+            <div class="vmax-quote-modal-body" id="vmax-quote-modal-body-text">
+                Bạn có chắc chắn muốn thực hiện hành động này không? Hành động này không thể hoàn tác.
+            </div>
+            <div class="vmax-quote-modal-footer">
+                <button class="vmax-quote-btn-secondary" id="vmax-quote-modal-btn-cancel">Hủy bỏ</button>
+                <button class="vmax-quote-btn-danger" id="vmax-quote-modal-btn-confirm">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hộp thoại hiển thị bản xem trước toàn màn hình trên Mobile/Tablet (Preview Modal) -->
+    <div class="vmax-quote-preview-modal-overlay" id="vmax-quote-preview-modal">
+        <div class="vmax-quote-preview-modal-container">
+            <div class="vmax-quote-preview-modal-header">
+                <h3>Bản xem trước báo giá (A4)</h3>
+                <div class="vmax-quote-preview-modal-header-actions">
+                    <button class="vmax-quote-btn-primary" id="vmax-quote-preview-modal-btn-print">
+                        <i class="fas fa-print"></i> <span>In/Lưu</span>
+                    </button>
+                    <button class="vmax-quote-btn-secondary" id="vmax-quote-preview-modal-btn-close">
+                        <i class="fas fa-times"></i> Đóng lại
+                    </button>
+                </div>
+            </div>
+            <div class="vmax-quote-preview-modal-body" id="vmax-quote-preview-modal-body-content">
+                <!-- Nơi clone hoặc di chuyển trang A4 vào để xem trên mobile -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State Overlay -->
+    <div class="vmax-quote-loading-overlay" id="vmax-quote-loading">
+        <div class="vmax-quote-loader-box">
+            <div class="vmax-quote-spinner"></div>
+            <p class="vmax-quote-loading-text" id="vmax-quote-loading-msg">Đang xử lý xuất báo giá PDF...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="vmax-quote-toast-container" id="vmax-quote-toast-container-id"></div>
+
+    <!-- Application Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

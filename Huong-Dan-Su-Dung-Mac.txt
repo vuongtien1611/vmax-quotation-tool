@@ -1,0 +1,10 @@
+HƯỚNG DẪN MỞ BẢNG BÁO GIÁ VMAX TRÊN MACBOOK (macOS)
+======================================================
+
+Cách 1: Nhấp đúp chuột vào file "Mo-Bang-Bao-Gia-Mac.command"
+Cách 2: Nhấp đúp chuột trực tiếp vào file "index.html" (mở bằng Safari hoặc Chrome)
+
+* Lưu ý:
+- Ứng dụng chạy hoàn toàn OFFLINE, không phụ thuộc vào kết nối mạng.
+- Tất cả chức năng tạo báo giá, thêm sản phẩm, tính chiết khấu, in ấn/xuất PDF và lưu dữ liệu đều hoạt động đầy đủ 100%.
+

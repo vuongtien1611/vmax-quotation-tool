@@ -1,0 +1,2406 @@
+/* VMAX Quotation Tool - Custom Stylesheet */
+
+/* --- THIẾT LẬP HỆ THỐNG BIẾN SỐ MÀU SẮC & PHÔNG CHỮ --- */
+:root {
+    --vmax-green-dark: #075D20;
+    --vmax-green: #0B7A2A;
+    --vmax-green-medium: #21B33F;
+    --vmax-green-light: #EAF7ED;
+    --vmax-border: #B9D8C1;
+    --vmax-text: #1F2937;
+    --vmax-text-muted: #667085;
+    --vmax-bg: #F5F8F6;
+    --vmax-white: #FFFFFF;
+
+    --vmax-red: #D92D20;
+    --vmax-red-light: #FEE4E2;
+    --vmax-shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.05);
+    --vmax-shadow-md: 0 4px 15px rgba(16, 24, 40, 0.08);
+    --vmax-shadow-lg: 0 12px 24px -4px rgba(16, 24, 40, 0.12);
+
+    --vmax-radius-sm: 6px;
+    --vmax-radius-md: 10px;
+    --vmax-radius-lg: 14px;
+
+    --vmax-transition: all 0.25s ease;
+}
+
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.vmax-quote-body {
+    font-family: 'Be Vietnam Pro', 'Inter', sans-serif;
+    background-color: var(--vmax-bg);
+    color: var(--vmax-text);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- HEADER ỨNG DỤNG --- */
+.vmax-quote-header {
+    background-color: var(--vmax-white);
+    border-bottom: 1px solid var(--vmax-border);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 70px;
+    box-shadow: var(--vmax-shadow-sm);
+}
+
+.vmax-quote-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.vmax-quote-header-logo {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+}
+
+.vmax-quote-header-title-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.vmax-quote-header-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--vmax-green-dark);
+    letter-spacing: 0.5px;
+}
+
+.vmax-quote-header-subtitle {
+    font-size: 12px;
+    color: var(--vmax-text-muted);
+}
+
+/* Save Status Badge */
+.vmax-quote-save-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-save-badge.saved {
+    background-color: var(--vmax-green-light);
+    color: var(--vmax-green);
+    border: 1px solid var(--vmax-border);
+}
+
+.vmax-quote-save-badge.unsaved {
+    background-color: #FFF4ED;
+    color: #D97706;
+    border: 1px solid #FDBA74;
+}
+
+.vmax-quote-save-badge.saving {
+    background-color: #EFF6FF;
+    color: #2563EB;
+    border: 1px solid #93C5FD;
+}
+
+.vmax-quote-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- NÚT BẤM (BUTTONS) --- */
+.vmax-quote-btn-primary,
+.vmax-quote-btn-secondary,
+.vmax-quote-btn-danger {
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 9px 16px;
+    border-radius: var(--vmax-radius-md);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--vmax-transition);
+    border: 1px solid transparent;
+}
+
+.vmax-quote-btn-primary {
+    background-color: var(--vmax-green);
+    color: var(--vmax-white);
+}
+
+.vmax-quote-btn-primary:hover {
+    background-color: var(--vmax-green-dark);
+    transform: translateY(-1px);
+}
+
+.vmax-quote-btn-primary:disabled {
+    background-color: var(--vmax-border);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.vmax-quote-btn-secondary {
+    background-color: var(--vmax-white);
+    color: var(--vmax-green);
+    border-color: var(--vmax-border);
+}
+
+.vmax-quote-btn-secondary:hover {
+    background-color: var(--vmax-green-light);
+    border-color: var(--vmax-green-medium);
+    transform: translateY(-1px);
+}
+
+.vmax-quote-btn-danger {
+    background-color: var(--vmax-white);
+    color: var(--vmax-red);
+    border-color: var(--vmax-red-light);
+}
+
+.vmax-quote-btn-danger:hover {
+    background-color: var(--vmax-red-light);
+    border-color: var(--vmax-red);
+    transform: translateY(-1px);
+}
+
+.vmax-quote-btn-small {
+    background: none;
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--vmax-green);
+    cursor: pointer;
+    padding: 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-btn-small:hover {
+    color: var(--vmax-green-dark);
+}
+
+/* --- CONTAINER CHÍNH --- */
+.vmax-quote-app {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* --- CỘT TRÁI: BẢNG NHẬP LIỆU (EDITOR) --- */
+.vmax-quote-editor {
+    width: 38%;
+    border-right: 1px solid var(--vmax-border);
+    background-color: var(--vmax-white);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 16px 20px 80px 20px;
+    /* Thêm padding-bottom 80px để tránh bị chân trang che khuất */
+    height: calc(100vh - 70px);
+}
+
+.vmax-quote-editor-footer {
+    background-color: var(--vmax-white);
+    border-top: 1px solid var(--vmax-border);
+    padding: 12px 20px;
+    margin: 15px -20px 0 -20px;
+    /* Căn lề âm để kéo giãn chạm viền sidebar */
+    display: flex;
+    gap: 6px;
+    z-index: 100;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.vmax-quote-editor-footer button {
+    flex: 1;
+    font-size: 11px !important;
+    padding: 8px 4px !important;
+    height: 36px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.vmax-quote-editor-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed var(--vmax-border);
+    padding-bottom: 8px;
+    flex-shrink: 0;
+    /* Ngăn chặn co bóp chiều cao */
+}
+
+.vmax-quote-template-manager-panel {
+    flex-shrink: 0;
+    /* Ngăn chặn co bóp chiều cao */
+}
+
+/* Accordion */
+.vmax-quote-accordion-item {
+    border: 1px solid var(--vmax-border);
+    border-radius: var(--vmax-radius-md);
+    margin-bottom: 12px;
+    overflow: hidden;
+    background-color: var(--vmax-white);
+    box-shadow: var(--vmax-shadow-sm);
+    transition: var(--vmax-transition);
+    flex-shrink: 0;
+    /* Ngăn chặn co bóp chiều cao */
+}
+
+.vmax-quote-accordion-item:hover {
+    border-color: var(--vmax-green-medium);
+}
+
+.vmax-quote-accordion-header {
+    width: 100%;
+    background-color: var(--vmax-white);
+    padding: 14px 18px;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--vmax-green-dark);
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-accordion-header span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vmax-quote-accordion-header span i {
+    width: 16px;
+    text-align: center;
+    color: var(--vmax-green);
+}
+
+.vmax-quote-accordion-arrow {
+    transition: transform var(--vmax-transition);
+    color: var(--vmax-text-muted);
+}
+
+/* Accordion states */
+.vmax-quote-accordion-item.vmax-quote-active {
+    border-color: var(--vmax-green);
+}
+
+.vmax-quote-accordion-item.vmax-quote-active .vmax-quote-accordion-header {
+    background-color: var(--vmax-green-light);
+}
+
+.vmax-quote-accordion-item.vmax-quote-active .vmax-quote-accordion-arrow {
+    transform: rotate(180deg);
+}
+
+.vmax-quote-accordion-content {
+    padding: 18px;
+    padding-bottom: 30px;
+    /* Tăng padding dưới để hiển thị trọn vẹn nút bấm */
+    border-top: 1px solid var(--vmax-border);
+    display: none;
+    max-height: 300px;
+    /* Tăng chiều cao khả dụng */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Tùy chỉnh thanh cuộn siêu thanh mảnh và chuyên nghiệp cho nội dung accordion */
+.vmax-quote-accordion-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.vmax-quote-accordion-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.vmax-quote-accordion-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+
+.vmax-quote-accordion-content::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Form Fields */
+.vmax-quote-form-group {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.vmax-quote-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.vmax-quote-form-row .vmax-quote-form-group {
+    margin-bottom: 0;
+}
+
+.vmax-quote-form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--vmax-text);
+}
+
+.vmax-quote-required {
+    color: var(--vmax-red);
+}
+
+.vmax-quote-input,
+.vmax-quote-textarea,
+.vmax-quote-select {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 8px 12px;
+    border: 1px solid var(--vmax-border);
+    border-radius: var(--vmax-radius-sm);
+    color: var(--vmax-text);
+    outline: none;
+    background-color: var(--vmax-white);
+    transition: var(--vmax-transition);
+    width: 100%;
+}
+
+.vmax-quote-input:focus,
+.vmax-quote-textarea:focus,
+.vmax-quote-select:focus {
+    border-color: var(--vmax-green-medium);
+    box-shadow: 0 0 0 3px rgba(33, 179, 63, 0.15);
+}
+
+.vmax-quote-textarea {
+    resize: vertical;
+}
+
+/* Input validation error styling */
+.vmax-quote-input-error {
+    border-color: var(--vmax-red) !important;
+}
+
+.vmax-quote-error-msg {
+    color: var(--vmax-red);
+    font-size: 11px;
+    display: none;
+    margin-top: 2px;
+}
+
+/* File Upload input Custom */
+.vmax-quote-file-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.vmax-quote-file-label {
+    background-color: var(--vmax-white);
+    border: 1px dashed var(--vmax-border);
+    border-radius: var(--vmax-radius-sm);
+    color: var(--vmax-green);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-file-label:hover {
+    background-color: var(--vmax-green-light);
+    border-color: var(--vmax-green);
+}
+
+.vmax-quote-file-input {
+    display: none;
+}
+
+.vmax-quote-file-name {
+    font-size: 12px;
+    color: var(--vmax-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+}
+
+.vmax-quote-hint {
+    font-size: 11px;
+    color: var(--vmax-text-muted);
+    margin-top: 2px;
+}
+
+.vmax-quote-info-text {
+    font-size: 12px;
+    color: var(--vmax-text-muted);
+    margin-bottom: 10px;
+}
+
+/* Toggle inputs (Checkboxes in Pricing) */
+.vmax-quote-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--vmax-bg);
+}
+
+.vmax-quote-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+}
+
+.vmax-quote-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--vmax-green);
+    cursor: pointer;
+}
+
+.vmax-quote-toggle-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.vmax-quote-input-small {
+    width: 70px;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 6px 8px;
+    border: 1px solid var(--vmax-border);
+    border-radius: var(--vmax-radius-sm);
+    text-align: center;
+    outline: none;
+}
+
+.vmax-quote-input-small:focus {
+    border-color: var(--vmax-green-medium);
+}
+
+/* --- TRÌNH XÂY DỰNG DÒNG KHÁCH HÀNG ĐỘNG --- */
+.vmax-quote-customer-row-card {
+    background-color: var(--vmax-bg);
+    border: 1px solid var(--vmax-border);
+    border-radius: var(--vmax-radius-sm);
+    padding: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-customer-row-card:hover {
+    border-color: var(--vmax-green-medium);
+}
+
+.vmax-quote-customer-row-card.vmax-quote-row-hidden {
+    opacity: 0.5;
+    background-color: #f1f5f9;
+}
+
+.vmax-quote-customer-row-inputs {
+    display: flex;
+    flex: 1;
+    gap: 6px;
+}
+
+.vmax-quote-customer-row-inputs input {
+    font-size: 11px !important;
+    padding: 6px 8px !important;
+    height: 30px !important;
+}
+
+.vmax-quote-customer-row-inputs .row-label-input {
+    width: 35%;
+    font-weight: bold;
+}
+
+.vmax-quote-customer-row-inputs .row-value-input {
+    width: 65%;
+}
+
+.vmax-quote-customer-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* Ẩn các nút hành động khi bình thường để giao diện gọn gàng (UX tối giản) */
+.vmax-quote-item-editor-card .vmax-quote-item-card-actions,
+.vmax-quote-customer-row-card .vmax-quote-customer-row-actions {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.vmax-quote-item-editor-card:hover .vmax-quote-item-card-actions,
+.vmax-quote-customer-row-card:hover .vmax-quote-customer-row-actions,
+.vmax-quote-item-editor-card:focus-within .vmax-quote-item-card-actions,
+.vmax-quote-customer-row-card:focus-within .vmax-quote-customer-row-actions {
+    opacity: 1;
+}
+
+
+
+/* --- HẠNG MỤC CÔNG VIỆC BUILDER --- */
+.vmax-quote-item-editor-card {
+    background-color: var(--vmax-bg);
+    border: 1px solid var(--vmax-border);
+    border-radius: var(--vmax-radius-md);
+    padding: 12px;
+    margin-bottom: 12px;
+    position: relative;
+    cursor: default;
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-item-editor-card:hover {
+    border-color: var(--vmax-green-medium);
+    box-shadow: var(--vmax-shadow-sm);
+}
+
+/* Dragging Sortable Helper styles */
+.vmax-quote-item-ghost {
+    opacity: 0.4;
+    background-color: var(--vmax-green-light);
+    border: 1px dashed var(--vmax-green);
+}
+
+.vmax-quote-item-drag-handle {
+    cursor: grab;
+    color: var(--vmax-text-muted);
+    padding: 4px;
+    font-size: 14px;
+}
+
+.vmax-quote-item-drag-handle:active {
+    cursor: grabbing;
+}
+
+.vmax-quote-item-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 8px;
+}
+
+.vmax-quote-item-card-title-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+}
+
+.vmax-quote-item-card-index {
+    background-color: var(--vmax-green);
+    color: var(--vmax-white);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.vmax-quote-item-card-input-title {
+    flex: 1;
+    font-weight: 700;
+}
+
+.vmax-quote-item-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.vmax-quote-btn-icon-danger,
+.vmax-quote-btn-icon-secondary {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 4px;
+    border-radius: var(--vmax-radius-sm);
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-btn-icon-danger {
+    color: var(--vmax-red);
+}
+
+.vmax-quote-btn-icon-danger:hover {
+    background-color: var(--vmax-red-light);
+}
+
+.vmax-quote-btn-icon-secondary {
+    color: var(--vmax-green);
+}
+
+.vmax-quote-btn-icon-secondary:hover {
+    background-color: var(--vmax-green-light);
+}
+
+/* Sub-bullets builder */
+.vmax-quote-subbullets-builder {
+    margin-top: 8px;
+    border-top: 1px solid var(--vmax-border);
+    padding-top: 8px;
+}
+
+.vmax-quote-subbullets-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--vmax-text-muted);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vmax-quote-subbullets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* Khoảng cách giữa các dòng tối thiểu 6-8px */
+    max-height: none;
+    /* Bung tự nhiên để cuộn qua thanh cuộn của accordion chính, tránh cuộn lồng nhau */
+    overflow: visible;
+}
+
+.vmax-quote-bullet-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Tăng khoảng cách */
+    width: 100%;
+}
+
+.vmax-quote-bullet-marker {
+    color: var(--vmax-green-medium);
+    font-size: 8px;
+    flex-shrink: 0;
+    width: 12px;
+    height: 32px;
+    /* Đảm bảo cùng chiều cao để căn giữa thẳng hàng */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vmax-quote-bullet-drag-handle {
+    cursor: grab;
+    color: #a0aec0;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+    flex-shrink: 0;
+    width: 16px;
+    height: 32px;
+    /* Đảm bảo cùng chiều cao để căn giữa thẳng hàng */
+}
+
+.vmax-quote-bullet-drag-handle:active {
+    cursor: grabbing;
+}
+
+.vmax-quote-bullet-input {
+    flex: 1;
+    min-width: 0;
+    /* Cho phép co giãn linh hoạt và chiếm toàn bộ chiều rộng còn lại */
+    font-family: inherit;
+    font-size: 12px;
+    padding: 6px 8px;
+    border: 1px solid var(--vmax-border);
+    border-radius: var(--vmax-radius-sm);
+    outline: none;
+}
+
+.vmax-quote-bullet-input:focus {
+    border-color: var(--vmax-green-medium);
+}
+
+.vmax-quote-bullet-row .vmax-quote-btn-icon-danger {
+    flex-shrink: 0;
+    /* Đảm bảo không bị bóp méo khi màn hình hẹp */
+    margin: 0;
+    height: 32px;
+    /* Đảm bảo nút xóa cũng cao bằng để căn giữa thẳng hàng hoàn hảo */
+    width: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vmax-quote-btn-add-item {
+    width: 100%;
+    background-color: var(--vmax-green-light);
+    color: var(--vmax-green-dark);
+    border: 1px dashed var(--vmax-green);
+    border-radius: var(--vmax-radius-md);
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-btn-add-item:hover {
+    background-color: var(--vmax-green);
+    color: var(--vmax-white);
+    border-style: solid;
+}
+
+/* Pricing Calculation Preview in Form */
+.vmax-quote-live-calc-panel {
+    background-color: var(--vmax-bg);
+    border: 1px solid var(--vmax-border);
+    border-radius: var(--vmax-radius-md);
+    padding: 14px;
+    margin-top: 16px;
+}
+
+.vmax-quote-live-calc-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--vmax-text-muted);
+    margin-bottom: 6px;
+}
+
+.vmax-quote-live-calc-row strong {
+    color: var(--vmax-text);
+}
+
+.vmax-quote-live-calc-divider {
+    border: none;
+    border-top: 1px solid var(--vmax-border);
+    margin: 8px 0;
+}
+
+.vmax-quote-live-calc-total {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--vmax-green-dark);
+    margin-bottom: 0;
+}
+
+.vmax-quote-live-calc-total strong {
+    color: var(--vmax-green-dark);
+    font-size: 16px;
+}
+
+
+/* --- CỘT PHẢI: BẢN XEM TRƯỚC BÁO GIÁ (PREVIEW PANEL) --- */
+.vmax-quote-preview-panel {
+    width: 62%;
+    background-color: #E2E8F0;
+    /* Nền xám nhạt để nổi bật trang A4 */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.vmax-quote-preview-toolbar {
+    background-color: var(--vmax-white);
+    border-bottom: 1px solid var(--vmax-border);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 10;
+    box-shadow: var(--vmax-shadow-sm);
+    height: 50px;
+}
+
+.vmax-quote-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vmax-quote-btn-icon {
+    background-color: var(--vmax-bg);
+    border: 1px solid var(--vmax-border);
+    width: 30px;
+    height: 30px;
+    border-radius: var(--vmax-radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--vmax-text);
+    cursor: pointer;
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-btn-icon:hover {
+    background-color: var(--vmax-green-light);
+    color: var(--vmax-green);
+    border-color: var(--vmax-green);
+}
+
+.vmax-quote-btn-text {
+    background: none;
+    border: none;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--vmax-text);
+    width: 42px;
+    text-align: center;
+}
+
+/* Scroll area cho trang A4 */
+.vmax-quote-preview-wrap {
+    flex: 1;
+    overflow: auto;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    scroll-behavior: smooth;
+}
+
+/* Floating button preview cho mobile/tablet */
+.vmax-quote-btn-fullscreen-floating {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--vmax-green);
+    color: var(--vmax-white);
+    border: none;
+    border-radius: 50px;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: var(--vmax-shadow-lg);
+    cursor: pointer;
+    display: none;
+    /* Chỉ hiện trên mobile/tablet */
+    z-index: 99;
+    align-items: center;
+    gap: 8px;
+    transition: var(--vmax-transition);
+}
+
+.vmax-quote-btn-fullscreen-floating:hover {
+    background-color: var(--vmax-green-dark);
+    transform: scale(1.05);
+}
+
+/* --- TRANG THIẾT KẾ BÁO GIÁ KHỔ A4 CHUẨN --- */
+.vmax-quote-page {
+    width: 210mm;
+    min-height: 297mm;
+    background-color: var(--vmax-white);
+    box-shadow: var(--vmax-shadow-lg);
+    padding: 12mm 15mm;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transform-origin: top center;
+    transition: transform 0.2s ease;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    color: var(--vmax-text);
+}
+
+/* 1. Header trang báo giá A4 */
+.vmax-quote-page-header {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1.5px solid #135E2D;
+    border-radius: 16px;
+    padding: 10px 20px;
+    margin-bottom: 14px;
+    gap: 10px;
+}
+
+.vmax-quote-page-header-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    flex-shrink: 0;
+}
+
+.vmax-quote-page-logo {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.vmax-quote-page-logo-subtext {
+    font-size: 8px;
+    color: #E8590C;
+    font-weight: 700;
+    margin-top: 6px;
+    white-space: nowrap;
+}
+
+.vmax-quote-page-header-divider {
+    width: 1px;
+    height: 65px;
+    background-color: #135E2D;
+    align-self: center;
+}
+
+.vmax-quote-page-header-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.vmax-quote-page-comp-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #135E2D;
+    margin-bottom: 4px;
+}
+
+.vmax-quote-page-comp-text {
+    font-size: 11px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.vmax-quote-page-comp-text i {
+    color: #135E2D;
+    width: 14px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.vmax-quote-page-comp-text i.fa-phone-alt,
+.vmax-quote-page-comp-text i.fa-phone {
+    transform: scaleX(-1);
+    display: inline-block;
+}
+
+/* 2. Tiêu đề chính */
+.vmax-quote-page-title-section {
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.vmax-quote-page-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #135E2D;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.vmax-quote-page-subtitle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #135E2D;
+}
+
+.vmax-quote-page-subtitle {
+    font-size: 12px;
+    color: #333;
+    font-style: italic;
+    margin: 0;
+}
+
+.vmax-quote-subtitle-line {
+    flex: 1;
+    max-width: 100px;
+    height: 1px;
+    background-color: #135E2D;
+}
+
+.vmax-quote-subtitle-diamond {
+    font-size: 8px;
+    color: #135E2D;
+}
+
+/* 3. Section Header chung */
+.vmax-quote-page-section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.vmax-quote-page-section-icon {
+    width: 24px;
+    height: 24px;
+    background-color: #135E2D;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+}
+
+.vmax-quote-page-section-title-main {
+    font-size: 12px;
+    font-weight: 700;
+    color: #135E2D;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* 3. Khách hàng */
+.vmax-quote-page-customer-box {
+    border: 1px solid #135E2D;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    background-color: #fff;
+}
+
+.vmax-quote-page-customer-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vmax-quote-page-customer-table tr {
+    border-bottom: 1px solid #C6E0CE;
+}
+
+.vmax-quote-page-customer-table tr:last-child {
+    border-bottom: none;
+}
+
+.vmax-quote-page-customer-table td {
+    padding: 6px 12px;
+    font-size: 11px;
+}
+
+.vmax-quote-cust-label {
+    width: 200px;
+    font-weight: 600;
+    color: #333;
+    background-color: #F3F4F6;
+    border-right: 1px solid #C6E0CE;
+}
+
+.vmax-quote-cust-val {
+    color: #111;
+    font-weight: 500;
+    background-color: #fff;
+}
+
+/* 4. Dự án & Hạng mục */
+.vmax-quote-page-project-card {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.vmax-quote-page-project-header {
+    background-color: #135E2D;
+    color: #fff;
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+}
+
+.vmax-quote-page-project-subheader {
+    background-color: #fff;
+    border-left: 1.5px solid #135E2D;
+    border-right: 1.5px solid #135E2D;
+    text-align: left;
+    font-weight: 700;
+    font-size: 12px;
+    color: #135E2D;
+    text-transform: uppercase;
+    padding: 10px 0 2px 0;
+    letter-spacing: 0.5px;
+    padding-left: 15px;
+}
+
+.vmax-quote-page-project-body {
+    border: 1.5px solid #135E2D;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    padding: 12px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.vmax-quote-page-item-row {
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #E2E8F0;
+}
+
+.vmax-quote-page-item-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.vmax-quote-page-item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.vmax-quote-page-item-num {
+    background-color: #135E2D;
+    color: #fff;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.vmax-quote-page-item-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333;
+}
+
+.vmax-quote-page-item-bullets {
+    list-style: none;
+    margin-left: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 2px;
+}
+
+.vmax-quote-page-item-bullets li {
+    font-size: 11px;
+    color: #333;
+    position: relative;
+    padding-left: 14px;
+}
+
+.vmax-quote-page-item-bullets li::before {
+    content: "•";
+    color: #135E2D;
+    font-size: 12px;
+    position: absolute;
+    left: -4px;
+    top: 2px;
+}
+
+/* 4.1 Layout thiết bị cho Responsive */
+.vmax-quote-devices-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #fff;
+    border-top: 1px dashed #E2E8F0;
+    border-bottom: 1px dashed #E2E8F0;
+    padding: 10px 0;
+    margin-top: 10px;
+    margin-left: 28px;
+    margin-bottom: 10px;
+    max-width: 500px;
+}
+
+.vmax-quote-device-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #135E2D;
+}
+
+.vmax-quote-device-item i {
+    font-size: 24px;
+}
+
+.vmax-quote-device-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.vmax-quote-device-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+}
+
+.vmax-quote-device-sub {
+    font-size: 9px;
+    color: #666;
+}
+
+.vmax-quote-device-divider {
+    width: 1px;
+    height: 30px;
+    background-color: #E2E8F0;
+}
+
+/* 5. Giá trị báo giá */
+.vmax-quote-page-pricing-section {
+    display: flex;
+    border: 1.5px solid #135E2D;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    background-color: #fff;
+}
+
+.vmax-quote-page-pricing-left {
+    width: 130px;
+    background-color: #EAF7ED;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1.5px solid #135E2D;
+    flex-shrink: 0;
+}
+
+.vmax-quote-page-pricing-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.vmax-quote-page-pricing-badge i {
+    font-size: 28px;
+    color: #135E2D;
+}
+
+.vmax-quote-page-pricing-badge span {
+    font-size: 11px;
+    font-weight: 700;
+    color: #135E2D;
+    line-height: 1.3;
+}
+
+.vmax-quote-page-pricing-right {
+    flex: 1;
+}
+
+.vmax-quote-page-pricing-table-new {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vmax-quote-page-pricing-table-new td {
+    padding: 6px 16px;
+    font-size: 12px;
+}
+
+.vmax-quote-page-pricing-table-new tr {
+    border-bottom: 1px solid #C6E0CE;
+}
+
+.vmax-quote-page-pricing-table-new tr:last-child {
+    border-bottom: none;
+}
+
+.vmax-quote-price-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.vmax-quote-price-val {
+    text-align: right;
+    font-weight: 600;
+    color: #111;
+}
+
+.vmax-quote-price-total-row {
+    background-color: #EAF7ED;
+}
+
+.vmax-quote-price-total-label {
+    font-weight: 800;
+    color: #135E2D;
+    font-size: 13px !important;
+}
+
+.vmax-quote-price-total-val {
+    text-align: right;
+    font-weight: 800;
+    color: #135E2D;
+    font-size: 16px !important;
+}
+
+/* 6. Chân trang */
+.vmax-quote-page-bottom-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: auto;
+    /* Push to bottom of A4 page */
+    margin-bottom: 12px;
+}
+
+.vmax-quote-page-bottom-box {
+    flex: 1;
+    border: 1.5px solid #135E2D;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #fff;
+}
+
+.vmax-quote-page-bottom-icon-wrap {
+    width: 32px;
+    height: 32px;
+    background-color: #135E2D;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.vmax-quote-page-bottom-text-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.vmax-quote-page-bottom-label {
+    font-size: 10px;
+    color: #666;
+}
+
+.vmax-quote-page-bottom-val-words {
+    font-size: 11px;
+    font-weight: 700;
+    color: #333;
+}
+
+.vmax-quote-page-bottom-label-timeline {
+    font-size: 10px;
+    font-weight: 800;
+    color: #333;
+}
+
+.vmax-quote-page-bottom-val-timeline {
+    font-size: 10px;
+    font-weight: 800;
+    color: #135E2D;
+}
+
+/* Footer wave */
+.vmax-quote-page-footer-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.vmax-quote-page-footer-wave svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* --- CHẾ ĐỘ CHỈNH SỬA TRỰC TIẾP TRÊN BẢN XEM TRƯỚC (CONTENTEDITABLE) --- */
+.vmax-quote-editable-active [contenteditable="true"] {
+    outline: none;
+    border-radius: 4px;
+    transition: var(--vmax-transition);
+    padding: 2px 6px;
+    margin: -2px -6px;
+    cursor: text;
+}
+
+.vmax-quote-editable-active [contenteditable="true"]:not(td):not(th) {
+    display: inline-block;
+}
+
+
+
+/* --- TOOLBAR CỐ ĐỊNH BÊN DƯỚI CHO TABLET/MOBILE --- */
+.vmax-quote-mobile-toolbar {
+    display: none;
+    /* Ẩn mặc định trên desktop */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--vmax-white);
+    border-top: 1px solid var(--vmax-border);
+    padding: 12px 16px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.vmax-quote-mobile-toolbar button {
+    flex: 1;
+}
+
+
+/* --- TOAST NOTIFICATIONS --- */
+.vmax-quote-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vmax-quote-toast {
+    background-color: var(--vmax-white);
+    border-left: 4px solid var(--vmax-green);
+    border-radius: var(--vmax-radius-sm);
+    padding: 12px 20px;
+    box-shadow: var(--vmax-shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--vmax-text);
+    min-width: 250px;
+    animation: vmaxToastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1), vmaxToastOut 0.3s 2.7s forwards;
+}
+
+.vmax-quote-toast-success {
+    border-left-color: var(--vmax-green);
+}
+
+.vmax-quote-toast-success i {
+    color: var(--vmax-green);
+}
+
+.vmax-quote-toast-danger {
+    border-left-color: var(--vmax-red);
+}
+
+.vmax-quote-toast-danger i {
+    color: var(--vmax-red);
+}
+
+@keyframes vmaxToastIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes vmaxToastOut {
+    to {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+}
+
+
+/* --- LOADING OVERLAY --- */
+.vmax-quote-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(31, 41, 55, 0.7);
+    /* Nền sẫm màu với độ mờ */
+    z-index: 1100;
+    display: none;
+    /* JS toggles */
+    align-items: center;
+    justify-content: center;
+}
+
+.vmax-quote-loader-box {
+    background-color: var(--vmax-white);
+    padding: 24px 32px;
+    border-radius: var(--vmax-radius-lg);
+    box-shadow: var(--vmax-shadow-lg);
+    text-align: center;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.vmax-quote-spinner {
+    border: 4px solid var(--vmax-bg);
+    border-top: 4px solid var(--vmax-green);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: vmaxSpin 1s linear infinite;
+}
+
+.vmax-quote-loading-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--vmax-text);
+}
+
+@keyframes vmaxSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* --- DIALOG XÁC NHẬN (CONFIRMATION MODAL) --- */
+.vmax-quote-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(31, 41, 55, 0.5);
+    z-index: 1200;
+    display: none;
+    /* Controlled by JS */
+    align-items: center;
+    justify-content: center;
+}
+
+.vmax-quote-modal {
+    background-color: var(--vmax-white);
+    border-radius: var(--vmax-radius-lg);
+    box-shadow: var(--vmax-shadow-lg);
+    width: 90%;
+    max-width: 440px;
+    overflow: hidden;
+    animation: vmaxModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vmax-quote-modal-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--vmax-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vmax-quote-modal-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--vmax-green-dark);
+}
+
+.vmax-quote-modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--vmax-text-muted);
+}
+
+.vmax-quote-modal-body {
+    padding: 20px;
+    font-size: 13px;
+    color: var(--vmax-text);
+    line-height: 1.5;
+}
+
+.vmax-quote-modal-footer {
+    padding: 12px 20px;
+    background-color: var(--vmax-bg);
+    border-top: 1px solid var(--vmax-border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+@keyframes vmaxModalIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* --- MODAL XEM TRƯỚC BÁO GIÁ CHO MOBILE/TABLET --- */
+.vmax-quote-preview-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(31, 41, 55, 0.95);
+    z-index: 1050;
+    display: none;
+    /* Controlled by JS */
+    flex-direction: column;
+}
+
+.vmax-quote-preview-modal-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.vmax-quote-preview-modal-header {
+    background-color: var(--vmax-white);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--vmax-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.vmax-quote-preview-modal-header h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--vmax-green-dark);
+}
+
+.vmax-quote-preview-modal-header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.vmax-quote-preview-modal-body {
+    flex: 1;
+    overflow: auto;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Đảm bảo trang A4 zoom/scroll phù hợp khi trong modal */
+.vmax-quote-preview-modal-body .vmax-quote-page {
+    box-shadow: none;
+    margin: 0 auto;
+}
+
+
+/* --- ĐIỀU CHỈNH RESPONSIVE --- */
+
+/* 1. Desktop & screens > 1200px (2 Columns split-pane) */
+@media (min-width: 1200px) {
+    .vmax-quote-editor {
+        width: 38%;
+    }
+
+    .vmax-quote-preview-panel {
+        width: 62%;
+    }
+}
+
+/* 2. Tablet (768px -> 1199px) */
+@media (min-width: 768px) and (max-width: 1199px) {
+    body.vmax-quote-body {
+        overflow-y: auto;
+        height: auto;
+    }
+
+    .vmax-quote-app {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+
+    .vmax-quote-editor {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        border-right: none;
+        border-bottom: 1px solid var(--vmax-border);
+        padding: 20px 24px 30px 24px;
+    }
+
+    .vmax-quote-preview-panel {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        padding-bottom: 80px;
+        /* Tránh toolbar chân trang */
+    }
+
+    .vmax-quote-preview-toolbar {
+        position: sticky;
+        top: 0;
+        border-top: 1px solid var(--vmax-border);
+    }
+
+    .vmax-quote-preview-wrap {
+        padding: 30px 15px;
+        overflow: visible;
+    }
+
+    .vmax-quote-mobile-toolbar {
+        display: flex;
+        /* Hiện toolbar ở dưới */
+    }
+
+    .vmax-quote-header-right {
+        display: none;
+        /* Ẩn các nút hành động trên header */
+    }
+
+    .vmax-quote-btn-fullscreen-floating {
+        display: flex;
+        /* Cho phép phóng to xem trang A4 */
+    }
+}
+
+/* 3. Mobile (dưới 768px) */
+@media (max-width: 767px) {
+    body.vmax-quote-body {
+        overflow-y: auto;
+        height: auto;
+    }
+
+    .vmax-quote-header {
+        padding: 10px 16px;
+    }
+
+    .vmax-quote-header-logo {
+        height: 34px;
+    }
+
+    .vmax-quote-header-title {
+        font-size: 13px;
+    }
+
+    .vmax-quote-header-subtitle {
+        display: none;
+        /* Ẩn dòng chữ phụ */
+    }
+
+    .vmax-quote-header-right {
+        display: none;
+    }
+
+    .vmax-quote-app {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+
+    /* Bảng điều khiển nhập liệu chiếm toàn bộ màn hình */
+    .vmax-quote-editor {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        border-right: none;
+        padding: 16px 12px 80px 12px;
+    }
+
+    .vmax-quote-form-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    /* Ẩn hoàn toàn cột xem trước preview panel trên mobile */
+    .vmax-quote-preview-panel {
+        display: none;
+    }
+
+    /* Toolbar cố định bên dưới */
+    .vmax-quote-mobile-toolbar {
+        display: flex;
+    }
+
+    /* Hiển thị nút tròn nổi xem trước */
+    .vmax-quote-btn-fullscreen-floating {
+        display: flex;
+        position: fixed;
+        bottom: 80px;
+        /* Trên thanh mobile toolbar */
+        right: 16px;
+    }
+
+    /* Modal xem trước */
+    .vmax-quote-preview-modal-body {
+        padding: 15px 5px;
+    }
+
+    /* Tránh zoom làm méo A4, cho cuộn ngang */
+    .vmax-quote-preview-modal-body .vmax-quote-page {
+        transform: scale(0.45) !important;
+        margin: 0;
+        box-shadow: none;
+    }
+
+    /* Đảm bảo các input trong form có font size đủ to (tránh auto-zoom của Safari) */
+    .vmax-quote-input,
+    .vmax-quote-textarea,
+    .vmax-quote-select {
+        font-size: 14px !important;
+    }
+}
+
+
+/* --- CSS DÀNH RIÊNG CHO IN / XUẤT PDF TRỰC TIẾP --- */
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
+@media print {
+
+    /* Đảm bảo in đúng màu nền, ảnh, đường viền của trình duyệt */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Đặt nền trắng cho body */
+    body.vmax-quote-body {
+        background-color: var(--vmax-white) !important;
+        overflow: visible !important;
+        height: auto !important;
+        margin: 12mm 15mm !important;
+        padding: 0 !important;
+    }
+
+    /* Ẩn các khối không cần in */
+    .vmax-quote-header,
+    .vmax-quote-editor,
+    .vmax-quote-preview-toolbar,
+    .vmax-quote-mobile-toolbar,
+    .vmax-quote-btn-fullscreen-floating,
+    .vmax-quote-toast-container,
+    .vmax-quote-modal-overlay,
+    .vmax-quote-preview-modal-overlay,
+    .vmax-quote-loading-overlay,
+    .ui-resizable-handle,
+    .page-separator {
+        display: none !important;
+    }
+
+    /* Set container app về block */
+    .vmax-quote-app {
+        display: block !important;
+        overflow: visible !important;
+        height: auto !important;
+    }
+
+    /* Thiết lập cho khối bao quanh preview */
+    .vmax-quote-preview-panel {
+        width: 100% !important;
+        display: block !important;
+        overflow: visible !important;
+        height: auto !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .vmax-quote-preview-wrap {
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        display: block !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* Định dạng trang A4 in */
+    .vmax-quote-page {
+        width: auto !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        outline: none !important;
+        transform: scale(1) !important;
+        position: relative !important;
+        box-sizing: border-box !important;
+        background-color: var(--vmax-white) !important;
+        overflow: visible !important;
+    }
+
+    /* Ẩn viền và màu nền focus của contenteditable khi in */
+    [contenteditable="true"] {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+
+    /* Đảm bảo wave chân trang khớp sát mép dưới và rộng 100% */
+    .vmax-quote-page-footer-wave {
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 40px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 10 !important;
+        overflow: hidden !important;
+    }
+
+    .vmax-quote-page-footer-wave svg {
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+    }
+
+    /* Tránh vỡ layout và ngắt trang giữa chừng */
+    .vmax-quote-page-header,
+    .vmax-quote-page-customer-box,
+    .vmax-quote-page-item-row,
+    .vmax-quote-page-pricing-section,
+    .vmax-quote-page-bottom-section,
+    tr {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* Giữ phần bảng giá và hộp chân trang sát với nội dung trên, không có margin-top quá lớn hoặc break */
+    .vmax-quote-page-pricing-section {
+        margin-top: 15px !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+    }
+
+    .vmax-quote-page-bottom-section {
+        margin-top: 15px !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+    }
+}
+
+/* --- CHẾ ĐỘ RENDER IN PDF TRONG ELECTRON --- */
+body.pdf-print-mode * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+body.pdf-print-mode {
+    background-color: var(--vmax-white) !important;
+    overflow: visible !important;
+    height: auto !important;
+    margin: 12mm 15mm !important;
+    padding: 0 !important;
+}
+
+body.pdf-print-mode .vmax-quote-header,
+body.pdf-print-mode .vmax-quote-editor,
+body.pdf-print-mode .vmax-quote-preview-toolbar,
+body.pdf-print-mode .vmax-quote-mobile-toolbar,
+body.pdf-print-mode .vmax-quote-btn-fullscreen-floating,
+body.pdf-print-mode .vmax-quote-toast-container,
+body.pdf-print-mode .vmax-quote-modal-overlay,
+body.pdf-print-mode .vmax-quote-preview-modal-overlay,
+body.pdf-print-mode .vmax-quote-loading-overlay,
+body.pdf-print-mode .ui-resizable-handle,
+body.pdf-print-mode .page-separator {
+    display: none !important;
+}
+
+body.pdf-print-mode .vmax-quote-app {
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+}
+
+body.pdf-print-mode .vmax-quote-preview-panel {
+    width: 100% !important;
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+body.pdf-print-mode .vmax-quote-preview-wrap {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+body.pdf-print-mode .vmax-quote-page {
+    width: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    transform: scale(1) !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    background-color: var(--vmax-white) !important;
+    overflow: visible !important;
+}
+
+body.pdf-print-mode [contenteditable="true"] {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+body.pdf-print-mode .vmax-quote-page-footer-wave {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 10 !important;
+    overflow: hidden !important;
+}
+
+body.pdf-print-mode .vmax-quote-page-footer-wave svg {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+}
+
+body.pdf-print-mode .vmax-quote-page-header,
+body.pdf-print-mode .vmax-quote-page-customer-box,
+body.pdf-print-mode .vmax-quote-page-item-row,
+body.pdf-print-mode .vmax-quote-page-pricing-section,
+body.pdf-print-mode .vmax-quote-page-bottom-section,
+body.pdf-print-mode tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+}
+
+body.pdf-print-mode .vmax-quote-page-pricing-section {
+    margin-top: 15px !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+}
+
+/* --- HỆ THỐNG PHÂN TRANG IN ĐỘNG --- */
+.vmax-quote-pdf-document {
+    display: none;
+    /* Ẩn ở chế độ hiển thị bình thường */
+}
+
+@media print {
+
+    /* Khi in, ẩn hoàn toàn trang preview gốc và chỉ hiển thị document in động */
+    #vmax-quote-page-print {
+        display: none !important;
+    }
+
+    .vmax-quote-pdf-document {
+        display: block !important;
+    }
+
+    /* Reset margins trên body để dùng margin: 0 trong @page */
+    body.vmax-quote-body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+    }
+}
+
+/* Trong chế độ xuất PDF của Electron, ta cũng làm tương tự */
+body.pdf-print-mode #vmax-quote-page-print {
+    display: none !important;
+}
+
+body.pdf-print-mode .vmax-quote-pdf-document {
+    display: block !important;
+}
+
+body.pdf-print-mode {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #ffffff !important;
+}
+
+/* CSS Định dạng các trang A4 riêng biệt (.pdf-page) */
+.pdf-page {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    padding: 12mm 15mm !important;
+    box-sizing: border-box !important;
+    background-color: #ffffff !important;
+    page-break-after: always !important;
+    break-after: always !important;
+    position: relative !important;
+}
+
+.pdf-page-header {
+    flex-shrink: 0 !important;
+    margin-bottom: 5mm !important;
+}
+
+.pdf-page-content {
+    flex: 1 !important;
+    min-height: 0 !important;
+    position: relative !important;
+    display: block !important;
+}
+
+.pdf-page-footer {
+    flex-shrink: 0 !important;
+    margin-top: 5mm !important;
+}
+
+/* CSS cho Header Tiếp nối (Trang 2 trở đi) */
+.pdf-page-header-content {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 12mm !important;
+}
+
+.pdf-page-header-logo {
+    height: 10mm !important;
+    width: auto !important;
+    max-width: 50mm !important;
+    object-fit: contain !important;
+}
+
+.pdf-page-header-text {
+    text-align: right !important;
+}
+
+.pdf-page-header-title {
+    font-size: 11px !important;
+    font-weight: bold !important;
+    color: var(--vmax-primary) !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.pdf-page-header-subtitle {
+    font-size: 9px !important;
+    color: #666 !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.pdf-page-header-divider {
+    height: 1px !important;
+    background-color: var(--vmax-primary) !important;
+    margin-top: 2mm !important;
+    opacity: 0.8 !important;
+}
+
+/* CSS cho Footer của các trang in */
+.pdf-page-footer-line {
+    height: 1px !important;
+    background-color: #e2e8f0 !important;
+    margin-bottom: 2mm !important;
+}
+
+.pdf-page-footer-content {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    font-size: 9px !important;
+    color: #718096 !important;
+}
+
+.pdf-page-footer-left {
+    text-align: left !important;
+}
+
+.pdf-page-footer-right {
+    font-weight: bold !important;
+    text-align: right !important;
+}
+
+/* Lớp cảnh báo lỗi tràn để phục vụ kiểm thử */
+.pdf-overflow-error {
+    border: 2px dashed #f56565 !important;
+    position: relative !important;
+}
+
+.pdf-overflow-error::after {
+    content: "LỖI TRÀN: Nội dung vượt quá chiều cao trang khả dụng!" !important;
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    background-color: #f56565 !important;
+    color: white !important;
+    font-size: 8px !important;
+    padding: 2px 4px !important;
+    font-weight: bold !important;
+    z-index: 9999 !important;
+}
+
+/* --- SIGNATURE SECTION STYLING --- */
+.vmax-quote-page-signature-section,
+.pdf-signature-group {
+    display: flex;
+    justify-content: space-between !important;
+    margin-top: 15px !important;
+    margin-bottom: 25px !important;
+    padding: 0 10px !important;
+}
+
+.vmax-quote-signature-col {
+    width: 45% !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.vmax-quote-signature-title {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    color: #135E2D !important;
+    margin: 0 0 2px 0 !important;
+    text-transform: uppercase !important;
+}
+
+.vmax-quote-signature-sub {
+    font-size: 9px !important;
+    color: #666 !important;
+    font-style: italic !important;
+    margin: 0 0 5px 0 !important;
+}
+
+.vmax-quote-signature-space {
+    height: 160px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    width: 100% !important;
+}
+
+.vmax-quote-signature-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+}
+
+/* --- HIỆU ỨNG BẤM VÀO ẢNH ĐỂ ĐỔI TỆP (CLICK TO CHANGE IMAGE) --- */
+.vmax-quote-page-logo,
+.vmax-quote-page-header-logo-container,
+.vmax-quote-signature-space,
+.vmax-quote-signature-img,
+#vmax-quote-header-logo-img,
+#comp-logo-name,
+#signature-cust-img-name,
+#signature-comp-img-name {
+    cursor: pointer !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.vmax-quote-page-logo:hover,
+.vmax-quote-page-header-logo-container:hover {
+    opacity: 0.85;
+    outline: 2px dashed var(--vmax-green);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.vmax-quote-signature-space:hover {
+    background-color: rgba(33, 179, 63, 0.08) !important;
+    outline: 2px dashed var(--vmax-green) !important;
+    outline-offset: 2px !important;
+    border-radius: 4px !important;
+}

@@ -1,0 +1,106 @@
+{
+  "name": "vmax-quotation-builder",
+  "version": "1.0.0",
+  "description": "Công cụ tạo bảng báo giá VMAX chuyên nghiệp đóng gói ứng dụng desktop Electron.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "node create-icon.js && electron-builder --win nsis portable --x64",
+    "build:mac": "node create-icon.js && electron-builder --mac dmg zip",
+    "build:dmg": "node create-icon.js && electron-builder --mac dmg",
+    "build:dmg:arm64": "node create-icon.js && electron-builder --mac dmg --arm64",
+    "build:dmg:x64": "node create-icon.js && electron-builder --mac dmg --x64",
+    "pack:mac-zip": "powershell Compress-Archive -Path index.html, style.css, script.js, assets, libs, Mo-Bang-Bao-Gia-Mac.command, Huong-Dan-Su-Dung-Mac.txt -DestinationPath dist/VMAX-Quotation-Tool-Mac.zip -Force"
+  },
+  "build": {
+    "appId": "com.vmaxtech.quotationbuilder",
+    "productName": "VMAX Quotation Builder",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "script.js",
+      "style.css",
+      "assets/**/*",
+      "libs/**/*",
+      "css/**/*",
+      "js/**/*",
+      "webfonts/**/*",
+      "images/**/*",
+      "package.json",
+      "!**/*.bak",
+      "!**/*.map",
+      "!dist/**/*",
+      "!scratch/**/*",
+      "!test*",
+      "!walkthrough.md",
+      "!task.md"
+    ],
+    "win": {
+      "icon": "assets/icon.ico",
+      "executableName": "VMAX-Quotation-Builder",
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "VMAX Quotation Builder",
+      "artifactName": "VMAX-Quotation-Builder-Setup.${ext}",
+      "uninstallDisplayName": "VMAX Quotation Builder",
+      "perMachine": false
+    },
+    "portable": {
+      "artifactName": "VMAX-Quotation-Builder-Portable.${ext}"
+    },
+    "mac": {
+      "icon": "assets/logo-vmax.png",
+      "category": "public.app-category.business",
+      "identity": null,
+      "target": [
+        "dmg"
+      ],
+      "artifactName": "VMAX-Quotation-Builder-Mac-${arch}.${ext}"
+    },
+    "dmg": {
+      "title": "VMAX Quotation Builder",
+      "artifactName": "VMAX-Quotation-Builder-Mac-${arch}.${ext}",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.0"
+  },
+  "author": "VMAXTech",
+  "license": "ISC"
+}
