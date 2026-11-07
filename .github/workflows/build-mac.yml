@@ -26,22 +26,48 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Generate Apple native .icns iconset
+        run: |
+          echo "Generating native Apple ICNS using sips and iconutil..."
+          mkdir -p icon.iconset
+          sips -z 16 16     assets/logo-vmax.png --out icon.iconset/icon_16x16.png
+          sips -z 32 32     assets/logo-vmax.png --out icon.iconset/icon_16x16@2x.png
+          sips -z 32 32     assets/logo-vmax.png --out icon.iconset/icon_32x32.png
+          sips -z 64 64     assets/logo-vmax.png --out icon.iconset/icon_32x32@2x.png
+          sips -z 128 128   assets/logo-vmax.png --out icon.iconset/icon_128x128.png
+          sips -z 256 256   assets/logo-vmax.png --out icon.iconset/icon_128x128@2x.png
+          sips -z 256 256   assets/logo-vmax.png --out icon.iconset/icon_256x256.png
+          sips -z 512 512   assets/logo-vmax.png --out icon.iconset/icon_256x256@2x.png
+          sips -z 512 512   assets/logo-vmax.png --out icon.iconset/icon_512x512.png
+          sips -z 1024 1024 assets/logo-vmax.png --out icon.iconset/icon_512x512@2x.png
+          iconutil -c icns icon.iconset -o assets/icon.icns
+          rm -rf icon.iconset
+          ls -lh assets/icon.icns
+
       - name: Build macOS Application (Apple Silicon arm64)
         run: |
-          echo "Starting build for arm64..."
-          npx electron-builder --mac dmg zip --arm64 -c.mac.identity=null
+          echo "Building arm64 DMG and ZIP..."
+          npx electron-builder --mac dmg zip --arm64 -c.mac.identity=null 2>&1 | tee build-arm64.log
 
       - name: Build macOS Application (Intel x64)
         run: |
-          echo "Starting build for x64..."
-          npx electron-builder --mac dmg zip --x64 -c.mac.identity=null
+          echo "Building x64 DMG and ZIP..."
+          npx electron-builder --mac dmg zip --x64 -c.mac.identity=null 2>&1 | tee build-x64.log
 
       - name: List generated build artifacts
         run: |
           echo "=== Generated Artifacts in dist/ ==="
           ls -lh dist/
 
+      - name: Upload Logs on Failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: "*.log"
+
       - name: Upload DMG & ZIP Artifacts
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: VMAX-Quotation-Mac-Apps
